@@ -35,19 +35,21 @@ df_count = df_count.query('y > @upper_threshold')
 df_count = df_count.query('y <= @lower_threshold')
 df_count.head(20)
 #%%
-min_value_A = df_count['y'].min()
+# Train test split
 
-print(min_value_A)
-
+train_ratio = 0.8  # Set the train ratio, e.g., 80% for training data
+train_size = int(len(df_count) * train_ratio)  # Calculate the number of samples for training
+train_df = df_count.iloc[:train_size]  # Subset the data for training
+test_df = df_count.iloc[train_size:]  # Subset the data for testing
 
 # %%
 m = Prophet(seasonality_mode='multiplicative')
 m.add_seasonality(name='daily',period=1, fourier_order=10)
 # m.add_seasonality(name='weekly', period=7, fourier_order=3)
 m.add_seasonality(name='yearly', period=365.25, fourier_order=10)
-m.fit(df_count)
+m.fit(train_df)
 # %%
-future = m.make_future_dataframe(periods=32)
+future = m.make_future_dataframe(periods=31)
 # %%
 forecast = m.predict(future)
 # %%
@@ -60,4 +62,5 @@ forecast = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
 forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(12)
 # %%
 m.plot(forecast);
+
 # %%
