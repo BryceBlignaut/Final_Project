@@ -31,6 +31,9 @@ st.write("The number of call center agents needed for each shift is calculated t
 # date selector and dataset filtering
 start_date = st.date_input('Start date', value= datetime.date(2022,12,2))
 end_date = st.date_input('End date', value= tomorrow)
+st.subheader("Call Volume and Staffing Requirements")
+st.write("x-axis = Date and shift time")
+st.write("y-axis = Call volume and agents needed for shift")
 
 if start_date <= end_date:
     st.success('Start date: `%s`\n\nEnd date:`%s`' % (start_date, end_date))
@@ -38,9 +41,6 @@ if start_date <= end_date:
     df2 = df[df["date_no_hour"].isin(pd.date_range(start_date, end_date))]
 
     df3 = df2[['date','calls','agents']]
-    st.subheader("Call Volume and Staffing Requirements")
-    st.write("x-axis = Date and shift time")
-    st.write("y-axis = Call volume and agents needed for shift")
 
     st.line_chart(data= df3,  x = 'date', width= 950 , height= 600, use_container_width= False)
     st.dataframe(df2, width= 1200)
