@@ -22,7 +22,6 @@ df = df[['date_no_hour','date','calls','agents']]
 
 
 st.title(f"University Call Center Volume and Staffing Predictions")
-st.subheader("Call volume and agent staffing predictions for a university Call Center")
 st.subheader('')
 
 st.write("The predictions range from 12/02/2022 - 01/12/2023. Filter the date selectors accordingly.")
