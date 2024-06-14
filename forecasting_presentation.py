@@ -38,9 +38,11 @@ if start_date <= end_date:
     df2 = df[df["date_no_hour"].isin(pd.date_range(start_date, end_date))]
 
     df3 = df2[['date','calls','agents']]
-    st.header("Call Volume and Staffing Requirements")
+    st.subheader("Call Volume and Staffing Requirements")
+    st.write("x-axis = Date and shift time")
+    st.write("y-axis = Call volume and agents needed for shift")
 
-    st.line_chart(data= df3,  x = 'Shift Date and Time', y = 'Call Volumes and Agents Needed' , width= 950 , height= 600, use_container_width= False)
+    st.line_chart(data= df3,  x = 'date', width= 950 , height= 600, use_container_width= False)
     st.dataframe(df2, width= 1200)
 else:
     st.error('Error: End date must fall after start date.')
